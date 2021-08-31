@@ -55,4 +55,32 @@ router.post('/', (req, res) => {
     }
 })
 
+router.put('/:id', (req, res) => {
+    const { body } = req
+    const { id } = req.params
+    if (body.title && body.contents){
+        Posts.update(id, body)
+            .then(num => {
+                if (num > 0){
+                    Posts.findById(id)
+                        .then(post => {
+                            res.status(200).json(post)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                            res.status(500).json({ message: 'Your updated post could not be retrieved' })
+                        })
+                }else{
+                    res.status(404).json({ message: "The post with the specified ID does not exist" })
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({ message: "The post information could not be modified" })
+            })
+    }else{
+        res.status(400).json({ message: "Please provide title and contents for the post" })
+    }
+})
+
 module.exports = router
