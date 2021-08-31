@@ -30,4 +30,29 @@ router.get('/', (req, res) => {
         })
 })
 
+router.post('/', (req, res) => {
+    const { body } = req
+    if (body.title && body.contents){
+        Posts.insert(body)
+            .then(obj => {
+                const { id } = obj
+                Posts.findById(id)
+                    .then(post => {
+                        console.log(post)
+                        res.status(201).json(post)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        res.status(500).json({ message: 'Your new post could not be retrieved' })
+                    })
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({ message: "There was an error while saving the post to the database" })
+            })
+    }else{
+        res.status(400).json({ message: "Please provide title and contents for the post" })
+    }
+})
+
 module.exports = router
