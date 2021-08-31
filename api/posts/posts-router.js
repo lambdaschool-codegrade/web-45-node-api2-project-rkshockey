@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/:id', (req, res) => {
     Posts.findById(req.params.id)
         .then(post => {
-            if (post){
+            if (post !== undefined){
                 res.status(200).json(post)
             }else{
                 res.status(404).json({ message: "The post with the specified ID does not exist" })
@@ -16,6 +16,17 @@ router.get('/:id', (req, res) => {
         .catch(err => {
             console.log(err)
             res.status(500).json({ message: "The post information could not be retrieved" })
+        })
+})
+
+router.get('/', (req, res) => {
+    Posts.find()
+        .then(posts => {
+            res.status(200).json(posts)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({ message: "The posts information could not be retrieved" })
         })
 })
 
