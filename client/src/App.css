@@ -2,3 +2,11 @@
   text-align: center;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+header div {
+  margin: 2% 10%;
+}
