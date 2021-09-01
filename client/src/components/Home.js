@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 
+import Post from './Posts'
+
 function Home (){
     const [posts, setPosts] = useState([])
 
@@ -10,10 +12,8 @@ function Home (){
             .catch(err => console.log(err))
     }, [])
 
-    console.log(posts)
-
     return <div className='posts'>
-        {/* {posts.map(post => <Post />)} */}
+        {posts.map(post => <Post post={post} key={post.id} setPosts={setPosts} posts={posts}/>)}
     </div>
 }
 

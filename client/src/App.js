@@ -12,7 +12,7 @@ function App() {
         <Header />
         <h1>Simple posts</h1>
         <Switch>
-          <Route path='/'>
+          <Route exact path='/'>
             <Home />
           </Route>
         </Switch>
